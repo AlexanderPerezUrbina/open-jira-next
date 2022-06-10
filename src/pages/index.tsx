@@ -9,7 +9,9 @@ const Home: NextPage = () => {
                 <title>Create Next App</title>
             </Head>
 
-            <Typography variant="h1">Hola mundo</Typography>
+            <Typography variant="h1" color="primary">
+                Hola mundo
+            </Typography>
         </div>
     );
 };
