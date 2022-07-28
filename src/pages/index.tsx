@@ -1,18 +1,15 @@
-import { Typography } from '@mui/material';
 import type { NextPage } from 'next';
-import Head from 'next/head';
+import { Typography } from '@mui/material';
+
+import { MainLayout } from '@/components/layouts';
 
 const Home: NextPage = () => {
     return (
-        <div>
-            <Head>
-                <title>Create Next App</title>
-            </Head>
-
+        <MainLayout title="Home">
             <Typography variant="h1" color="primary">
                 Hola mundo
             </Typography>
-        </div>
+        </MainLayout>
     );
 };
 
