@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Link from 'next/link';
 import {
     Box,
@@ -11,6 +12,7 @@ import {
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import { UIContext } from '@/context/ui';
 
 interface MenuItem {
     href: string;
@@ -19,6 +21,8 @@ interface MenuItem {
 }
 
 const Sidebar = () => {
+    const { isSidebarMenuOpen, closeSidebarMenu } = useContext(UIContext);
+
     const menuItems: MenuItem[] = [
         {
             href: '/',
@@ -35,10 +39,8 @@ const Sidebar = () => {
     return (
         <Drawer
             anchor="left"
-            open={true}
-            onClose={() => {
-                console.log('Ignacia tienes cara de ignacia');
-            }}
+            open={isSidebarMenuOpen}
+            onClose={closeSidebarMenu}
         >
             <Box sx={{ width: 250 }}>
                 <Box sx={{ padding: '5px 10px' }}>
