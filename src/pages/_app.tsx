@@ -5,15 +5,18 @@ import { lightTheme } from '@/themes';
 
 import '../styles/globals.css';
 import { UIProvider } from '@/context/ui';
+import { EntriesProvider } from '@/context/entries';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
     return (
-        <UIProvider>
-            <ThemeProvider theme={lightTheme}>
-                <CssBaseline />
-                <Component {...pageProps} />
-            </ThemeProvider>
-        </UIProvider>
+        <EntriesProvider>
+            <UIProvider>
+                <ThemeProvider theme={lightTheme}>
+                    <CssBaseline />
+                    <Component {...pageProps} />
+                </ThemeProvider>
+            </UIProvider>
+        </EntriesProvider>
     );
 };
 
