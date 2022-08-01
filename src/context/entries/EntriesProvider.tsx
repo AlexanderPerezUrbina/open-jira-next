@@ -17,19 +17,19 @@ const initialState: EntriesState = {
         {
             _id: uuidv4(),
             createdAt: Date.now(),
-            description: 'aishdishd',
+            description: 'Pendiente: aishdishd',
             status: 'pending',
         },
         {
             _id: uuidv4(),
             createdAt: Date.now() - 86400000,
-            description: 'aishdishd',
+            description: 'En Progreso: aishdishd',
             status: 'in-progress',
         },
         {
             _id: uuidv4(),
             createdAt: Date.now() - 172800000,
-            description: 'aishdishd',
+            description: 'Completado: aishdishd',
             status: 'finished',
         },
     ],

@@ -1,3 +1,4 @@
+import { Entry } from '@/interfaces';
 import {
     Card,
     CardActionArea,
@@ -6,13 +7,13 @@ import {
     Typography,
 } from '@mui/material';
 
-const EntryCard = () => {
+const EntryCard = ({ description }: Entry) => {
     return (
         <Card sx={{ marginBottom: 1 }}>
             <CardActionArea>
                 <CardContent>
                     <Typography sx={{ whiteSpace: 'pre-line' }}>
-                        Esto es la descripcion xd
+                        {description}
                     </Typography>
                 </CardContent>
 

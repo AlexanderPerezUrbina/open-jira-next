@@ -12,7 +12,7 @@ const Home: NextPage = () => {
                         <CardHeader title="Pendientes" />
 
                         <CardContent>
-                            <EntryList />
+                            <EntryList status="pending" />
                         </CardContent>
                     </Card>
                 </Grid>
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
                         <CardHeader title="En progreso" />
 
                         <CardContent>
-                            <EntryList />
+                            <EntryList status="in-progress" />
                         </CardContent>
                     </Card>
                 </Grid>
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
                         <CardHeader title="Completados" />
 
                         <CardContent>
-                            <EntryList />
+                            <EntryList status="finished" />
                         </CardContent>
                     </Card>
                 </Grid>
