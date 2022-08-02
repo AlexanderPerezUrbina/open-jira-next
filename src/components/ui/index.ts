@@ -9,3 +9,6 @@ export * from './entries/EntryList';
 
 export { default as EntryCard } from './entries/EntryCard';
 export * from './entries/EntryCard';
+
+export { default as NewEntry } from './entries/NewEntry';
+export * from './entries/NewEntry';
