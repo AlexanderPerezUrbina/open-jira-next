@@ -1,13 +1,16 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import { EntriesContext } from '@/context/entries';
 
 const NewEntry = () => {
     const [isFormActivated, setIsFormActivated] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>('');
     const [inputHasError, setInputHasError] = useState<boolean>(false);
+
+    const { addNewEntry } = useContext(EntriesContext);
 
     const inputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -18,6 +21,10 @@ const NewEntry = () => {
             setInputHasError(true);
             return;
         }
+
+        addNewEntry(inputValue);
+        setInputValue('');
+        setIsFormActivated(false);
     };
 
     return (

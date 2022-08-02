@@ -36,10 +36,21 @@ const initialState: EntriesState = {
 };
 
 const EntriesProvider = ({ children }: ProviderProps) => {
-    const [state] = useReducer(entriesReducer, initialState);
+    const [state, dispatch] = useReducer(entriesReducer, initialState);
+
+    const addNewEntry = (description: string) => {
+        const newEntry: Entry = {
+            _id: uuidv4(),
+            createdAt: Date.now(),
+            description,
+            status: 'pending',
+        };
+
+        dispatch({ type: '[Entries] Add Entry', payload: newEntry });
+    };
 
     return (
-        <EntriesContext.Provider value={{ ...state }}>
+        <EntriesContext.Provider value={{ ...state, addNewEntry }}>
             {children}
         </EntriesContext.Provider>
     );
