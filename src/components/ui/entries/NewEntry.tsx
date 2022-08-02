@@ -4,13 +4,15 @@ import { Box, Button, TextField } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { EntriesContext } from '@/context/entries';
+import { UIContext } from '@/context/ui';
 
 const NewEntry = () => {
-    const [isFormActivated, setIsFormActivated] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>('');
     const [inputHasError, setInputHasError] = useState<boolean>(false);
 
     const { addNewEntry } = useContext(EntriesContext);
+    const { setIsNewEntryFormActivated, isNewEntryFormActivated } =
+        useContext(UIContext);
 
     const inputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -24,12 +26,12 @@ const NewEntry = () => {
 
         addNewEntry(inputValue);
         setInputValue('');
-        setIsFormActivated(false);
+        setIsNewEntryFormActivated(false);
     };
 
     return (
         <Box sx={{ marginBottom: 2, paddingX: 2 }}>
-            {isFormActivated ? (
+            {isNewEntryFormActivated ? (
                 <>
                     <TextField
                         fullWidth
@@ -46,7 +48,7 @@ const NewEntry = () => {
                     <Box display="flex" justifyContent="space-between">
                         <Button
                             variant="text"
-                            onClick={() => setIsFormActivated(false)}
+                            onClick={() => setIsNewEntryFormActivated(false)}
                         >
                             Cancelar
                         </Button>
@@ -66,7 +68,7 @@ const NewEntry = () => {
                     startIcon={<AddCircleOutlineOutlinedIcon />}
                     variant="outlined"
                     fullWidth
-                    onClick={() => setIsFormActivated(true)}
+                    onClick={() => setIsNewEntryFormActivated(true)}
                 >
                     Agregar Tarea
                 </Button>
