@@ -8,11 +8,13 @@ interface ProviderProps {
 export interface UIState {
     isSidebarMenuOpen: boolean;
     isNewEntryFormActivated: boolean;
+    isDragging: boolean;
 }
 
 const initialState: UIState = {
     isSidebarMenuOpen: false,
     isNewEntryFormActivated: false,
+    isDragging: false,
 };
 
 const UIProvider = ({ children }: ProviderProps) => {
@@ -22,6 +24,9 @@ const UIProvider = ({ children }: ProviderProps) => {
     const closeSidebarMenu = () => dispatch({ type: '[UI] Close Sidebar' });
     const setIsNewEntryFormActivated = (value: boolean) => {
         dispatch({ type: '[UI] Open/Close NewEntry Form', payload: value });
+    };
+    const setIsDragging = (value: boolean) => {
+        dispatch({ type: '[UI] Set Dragging State', payload: value });
     };
 
     return (
@@ -33,6 +38,7 @@ const UIProvider = ({ children }: ProviderProps) => {
                 openSidebarMenu,
                 closeSidebarMenu,
                 setIsNewEntryFormActivated,
+                setIsDragging,
             }}
         >
             {children}
