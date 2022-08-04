@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import { EntriesContext, entriesReducer } from '@/context/entries';
-import { Entry } from '@/interfaces';
+import { Entry, EntryStatus } from '@/interfaces';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -49,8 +49,23 @@ const EntriesProvider = ({ children }: ProviderProps) => {
         dispatch({ type: '[Entries] Add Entry', payload: newEntry });
     };
 
+    const changeEntryStatus = ({
+        entry,
+        status,
+    }: {
+        entry: Entry;
+        status: EntryStatus;
+    }) => {
+        dispatch({
+            type: '[Entries] Change Entry Status',
+            payload: { entry, status },
+        });
+    };
+
     return (
-        <EntriesContext.Provider value={{ ...state, addNewEntry }}>
+        <EntriesContext.Provider
+            value={{ ...state, addNewEntry, changeEntryStatus }}
+        >
             {children}
         </EntriesContext.Provider>
     );

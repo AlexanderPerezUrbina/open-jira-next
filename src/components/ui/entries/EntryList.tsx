@@ -10,8 +10,8 @@ interface Props {
 }
 
 const EntryList = ({ status }: Props) => {
-    const { isDragging } = useContext(UIContext);
-    const { entries } = useContext(EntriesContext);
+    const { isDragging, setIsDragging } = useContext(UIContext);
+    const { entries, changeEntryStatus } = useContext(EntriesContext);
     const listRef = useRef<HTMLDivElement>(null);
 
     const [isListHighlighted, setIsListHighlighted] = useState<boolean>(false);
@@ -23,8 +23,10 @@ const EntryList = ({ status }: Props) => {
 
     const onDrop = (event: DragEvent<HTMLDivElement>) => {
         setIsListHighlighted(false);
-        const entryID = event.dataTransfer.getData('entry_id');
-        console.log({ _id: entryID });
+        const id = event.dataTransfer.getData('entry_id');
+        const entry = entries.find((entry) => entry._id === id)!;
+        changeEntryStatus({ entry, status });
+        setIsDragging(false);
     };
 
     const onDragEnter = () => {

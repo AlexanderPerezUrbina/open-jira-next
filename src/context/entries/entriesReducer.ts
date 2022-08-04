@@ -1,7 +1,12 @@
 import { EntriesState } from '@/context/entries';
-import { Entry } from '@/interfaces';
+import { Entry, EntryStatus } from '@/interfaces';
 
-type EntriesAction = { type: '[Entries] Add Entry'; payload: Entry };
+type EntriesAction =
+    | { type: '[Entries] Add Entry'; payload: Entry }
+    | {
+          type: '[Entries] Change Entry Status';
+          payload: { entry: Entry; status: EntryStatus };
+      };
 
 const entriesReducer = (
     state: EntriesState,
@@ -12,6 +17,22 @@ const entriesReducer = (
             return {
                 ...state,
                 entries: [...state.entries, action.payload],
+            };
+
+        case '[Entries] Change Entry Status':
+            const filteredEntries = state.entries.filter(
+                (entry) => entry._id !== action.payload.entry._id,
+            );
+
+            return {
+                ...state,
+                entries: [
+                    ...filteredEntries,
+                    {
+                        ...action.payload.entry,
+                        status: action.payload.status,
+                    },
+                ],
             };
 
         default:
