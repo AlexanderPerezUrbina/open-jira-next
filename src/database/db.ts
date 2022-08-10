@@ -48,6 +48,7 @@ export const connect = async () => {
 };
 
 export const disconnect = async () => {
+    if (process.env.NODE_ENV === 'development') return;
     if (mongoConnection.status === 'disconnected') return;
     await mongoose.disconnect();
     mongoConnection.status = 'disconnected';
