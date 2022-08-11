@@ -2,6 +2,7 @@ import { EntriesState } from '@/context/entries';
 import { Entry, EntryStatus } from '@/interfaces';
 
 type EntriesAction =
+    | { type: '[Entries] Set Initial State'; payload: Entry[] }
     | { type: '[Entries] Add Entry'; payload: Entry }
     | {
           type: '[Entries] Change Entry Status';
@@ -13,6 +14,12 @@ const entriesReducer = (
     action: EntriesAction,
 ): EntriesState => {
     switch (action.type) {
+        case '[Entries] Set Initial State':
+            return {
+                ...state,
+                entries: [...state.entries, ...action.payload],
+            };
+
         case '[Entries] Add Entry':
             return {
                 ...state,
