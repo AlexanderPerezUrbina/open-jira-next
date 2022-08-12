@@ -17,7 +17,7 @@ const entriesReducer = (
         case '[Entries] Set Initial State':
             return {
                 ...state,
-                entries: [...state.entries, ...action.payload],
+                entries: action.payload,
             };
 
         case '[Entries] Add Entry':
