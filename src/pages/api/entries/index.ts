@@ -1,5 +1,5 @@
 import { db } from '@/database';
-import { Entry as IEntry } from '@/interfaces';
+import { Entry as IEntry, EntryStatus } from '@/interfaces';
 import { Entry } from '@/models';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -12,6 +12,9 @@ export default async function handler(
     switch (req.method) {
         case 'GET':
             return getEntries(res);
+
+        case 'POST':
+            return storeEntries(req, res);
 
         default:
             return res.status(400).json({
@@ -26,4 +29,28 @@ const getEntries = async (res: NextApiResponse<Data>) => {
     await db.disconnect();
 
     return res.status(200).json(entries);
+};
+
+const storeEntries = async (
+    req: NextApiRequest,
+    res: NextApiResponse<Data>,
+) => {
+    const { description, status } = req.body as {
+        description: string;
+        status?: EntryStatus;
+    };
+
+    await db.connect();
+
+    const entry = new Entry({
+        createdAt: Date.now(),
+        description,
+        status: status || 'pending',
+    });
+
+    entry.save();
+
+    await db.disconnect();
+
+    res.status(201).json(entry);
 };

@@ -5,6 +5,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { EntriesContext } from '@/context/entries';
 import { UIContext } from '@/context/ui';
+import * as api from '@/api';
 
 const NewEntry = () => {
     const [inputValue, setInputValue] = useState<string>('');
@@ -18,11 +19,17 @@ const NewEntry = () => {
         setInputValue(event.target.value);
     };
 
-    const onSave = () => {
+    const onSave = async () => {
         if (!inputValue) {
             setInputHasError(true);
             return;
         }
+
+        const res = await api.entries.post('/', {
+            description: inputValue,
+        });
+
+        if (res.status !== 201) return;
 
         addNewEntry(inputValue);
         setInputValue('');
