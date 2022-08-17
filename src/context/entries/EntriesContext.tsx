@@ -1,17 +1,11 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { createContext } from 'react';
-import { Entry, EntryStatus } from '@/interfaces';
+import { Entry } from '@/interfaces';
 
 interface ContextProps {
     entries: Entry[];
     addNewEntry: (description: string) => void;
-    changeEntryStatus: ({
-        entry,
-        status,
-    }: {
-        entry: Entry;
-        status: EntryStatus;
-    }) => void;
+    updateEntry: (id: string, values: Partial<Entry>) => void;
 }
 
 const EntriesContext = createContext({} as ContextProps);

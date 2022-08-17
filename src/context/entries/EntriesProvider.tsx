@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from 'react';
 import { EntriesContext, entriesReducer } from '@/context/entries';
-import { Entry, EntryStatus } from '@/interfaces';
+import { Entry } from '@/interfaces';
 
 import * as api from '@/api';
 
@@ -32,16 +32,10 @@ const EntriesProvider = ({ children }: ProviderProps) => {
         dispatch({ type: '[Entries] Add Entry', payload: newEntry });
     };
 
-    const changeEntryStatus = ({
-        entry,
-        status,
-    }: {
-        entry: Entry;
-        status: EntryStatus;
-    }) => {
+    const updateEntry = (_id: string, values: Partial<Omit<Entry, '_id'>>) => {
         dispatch({
-            type: '[Entries] Change Entry Status',
-            payload: { entry, status },
+            type: '[Entries] Update Entry',
+            payload: { _id, ...values },
         });
     };
 
@@ -58,9 +52,7 @@ const EntriesProvider = ({ children }: ProviderProps) => {
     }, []);
 
     return (
-        <EntriesContext.Provider
-            value={{ ...state, addNewEntry, changeEntryStatus }}
-        >
+        <EntriesContext.Provider value={{ ...state, addNewEntry, updateEntry }}>
             {children}
         </EntriesContext.Provider>
     );

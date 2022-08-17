@@ -4,6 +4,7 @@ import { EntryCard } from '@/components/ui';
 import { EntryStatus } from '@/interfaces';
 import { EntriesContext } from '@/context/entries';
 import { UIContext } from '@/context/ui';
+import * as api from '@/api';
 
 interface Props {
     status: EntryStatus;
@@ -11,7 +12,7 @@ interface Props {
 
 const EntryList = ({ status }: Props) => {
     const { isDragging, setIsDragging } = useContext(UIContext);
-    const { entries, changeEntryStatus } = useContext(EntriesContext);
+    const { entries, updateEntry } = useContext(EntriesContext);
     const listRef = useRef<HTMLDivElement>(null);
 
     const [isListHighlighted, setIsListHighlighted] = useState<boolean>(false);
@@ -21,11 +22,17 @@ const EntryList = ({ status }: Props) => {
         [entries, status],
     );
 
-    const onDrop = (event: DragEvent<HTMLDivElement>) => {
+    const onDrop = async (event: DragEvent<HTMLDivElement>) => {
         setIsListHighlighted(false);
         const id = event.dataTransfer.getData('entry_id');
-        const entry = entries.find((entry) => entry._id === id)!;
-        changeEntryStatus({ entry, status });
+
+        const res = await api.entries.put(`/${id}`, {
+            status,
+        });
+
+        if (res.status !== 200) return;
+
+        updateEntry(id, { status });
         setIsDragging(false);
     };
 
